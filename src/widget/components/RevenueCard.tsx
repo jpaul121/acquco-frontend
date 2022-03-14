@@ -1,4 +1,5 @@
 import { BudgetItem } from '../'
+import { Divider } from '@mui/material'
 import { HelpOutline } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 import React from 'react'
@@ -25,7 +26,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     borderWidth: '2px',
     borderStyle: 'solid',
     borderRadius: '10px',
-    height: '20%',
+    height: '21%',
     width: '94%',
     margin: '3% 3% 0% 3%',
     color: 'black',
@@ -33,10 +34,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    padding: '5px 6px',
+    padding: '6px 7px',
     '&:nth-of-type(1)': {
       borderColor: 'rgb(229, 238, 252)',
-    }
+    },
+    '&:nth-last-child(1)': {
+      marginBottom: 'auto',
+    },
   },
   itemName: {
     marginTop: '0%',
@@ -54,7 +58,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     alignItems: 'center',
   },
   totalBalance: {
-    height: '20%',
+    height: '25%',
     width: '100%',
     backgroundColor: 'rgb(235, 127, 47)',
     borderRadius: '10px',
@@ -77,7 +81,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     width: 'auto',
     display: 'inline-flex',
     flexDirection: 'column',
-    padding: '5px 6px',
+    padding: '13px 8px',
   },
   balanceTop: {
     display: 'flex',
@@ -89,8 +93,18 @@ const useStyles = makeStyles()((theme: Theme) => ({
     marginBottom: '0%',
   },
   balanceAmount: {
-    marginTop: '0%',
+    marginTop: 'auto',
     marginBottom: '0%',
+    justifySelf: 'flex-end',
+  },
+  divider: {
+    background: 'rgb(247, 218, 195)',
+    borderColor: 'rgb(247, 218, 195)',
+    height: '1px', 
+    width: '90%', 
+    alignSelf: 'center', 
+    justifySelf: 'center',
+    marginTop: 'auto',
   }
 }))
 
@@ -113,6 +127,7 @@ export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProcee
           )
         })
       }
+      <Divider className={classes.divider} flexItem={true} />
       <div className={classes.totalBalance}>
         <div className={classes.balanceLeft}>=</div>
         <div className={classes.balanceRight}>
