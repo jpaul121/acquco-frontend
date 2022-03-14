@@ -25,7 +25,6 @@ export const App = () => {
       <div className={classes.main}>
         <ProfitLossWidget />
       </div>
-      {/* <ChatErrors /> */}
     </>
   )
 }

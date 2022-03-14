@@ -59,7 +59,7 @@ export const initialState: LineItemRecord = {
   },
   'Cost of advertising': {
     kind: LineItemType.Expense,
-    value: 541.85,
+    value: 10095.06,
     granularity: LineItemGranularity.LineItem,
   },
   'Amazon fees': {
