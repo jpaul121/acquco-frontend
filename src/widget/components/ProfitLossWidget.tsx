@@ -2,6 +2,7 @@ import { ControlCamera as ControlCameraIcon, MoreHoriz } from '@mui/icons-materi
 
 import { IconButton } from '@mui/material'
 import React from 'react'
+import { RevenueCard } from '../'
 import { Theme } from '@mui/material'
 import { makeStyles } from '../../utils'
 
@@ -19,6 +20,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
     alignContent: 'center',
     height: '90vh',
     width: '80vw',
+    paddingLeft: '4%',
+    paddingRight: '4%',
+  },
+  sankeyContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexGrow: '1',
   },
   toolbarButtons: {
     justifySelf: 'flex-end',
@@ -27,7 +35,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
   widgetToolbar: {
     alignItems: 'center',
     display: 'flex',
-    padding: '2vh 2vw',
+    paddingTop: '2vh',
   },
   widgetTitle: {
     color: 'rgb(33, 49, 87)',
@@ -47,9 +55,12 @@ export const ProfitLossWidget = () => {
               <ControlCameraIcon  />
             </IconButton>
             <IconButton sx={{ color: 'gray' }} >
-              <MoreHoriz  />
+              <MoreHoriz />
             </IconButton>
           </div>
+        </div>
+        <div className={classes.sankeyContainer}>
+          <RevenueCard />
         </div>
       </div>
     </>
