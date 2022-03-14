@@ -52,10 +52,49 @@ const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  totalBalance: {
+    height: '20%',
+    width: '100%',
+    backgroundColor: 'rgb(235, 127, 47)',
+    borderRadius: '10px',
+    justifySelf: 'flex-end',
+    marginTop: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  balanceLeft: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '22%',
+    height: '100%',
+    backgroundColor: 'rgb(220, 115, 44)',
+    borderRadius: '10px',
+  },
+  balanceRight: {
+    height: '100%',
+    width: 'auto',
+    display: 'inline-flex',
+    flexDirection: 'column',
+    padding: '5px 6px',
+  },
+  balanceTop: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  balanceTitle: {
+    marginTop: '0%',
+    marginBottom: '0%',
+  },
+  balanceAmount: {
+    marginTop: '0%',
+    marginBottom: '0%',
   }
 }))
 
-export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal }) => {
+export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProceeds }) => {
   const { classes } = useStyles()
   return (
     <div className={classes.revenueCard}>
@@ -74,6 +113,18 @@ export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal }) => {
           )
         })
       }
+      <div className={classes.totalBalance}>
+        <div className={classes.balanceLeft}>=</div>
+        <div className={classes.balanceRight}>
+          <div className={classes.balanceTop}>
+            <h4 className={classes.balanceTitle}>Net Proceeds</h4>
+            <IconButton sx={{ color: 'rgb(255, 255, 255)', fontSize: '1em' }}>
+              <HelpOutline sx={{ fontSize: '1em' }} />
+            </IconButton>
+          </div>
+          <h4 className={classes.balanceAmount}>{rawNumbertoDollar.format(totalProceeds)}</h4>
+        </div>
+      </div>
     </div>
   )
 }

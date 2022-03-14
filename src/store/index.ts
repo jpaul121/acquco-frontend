@@ -54,6 +54,12 @@ export const getExpenseTotal = createSelector(profitLossState, state =>
   )
 )
 
+// @ts-ignore
+export const getTotalProceeds = createSelector(
+  [ getSalesTotal, getRefundTotal, getExpenseTotal ],
+  (totalSales, totalRefunds, totalExpenses) => totalSales + totalRefunds + totalExpenses
+)
+
 // // @ts-ignore
 // export const getExpenseTotal = createSelector(getPLDataArray, state => 
 //   state
