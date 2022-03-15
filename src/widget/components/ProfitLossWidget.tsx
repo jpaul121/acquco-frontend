@@ -62,7 +62,7 @@ export const ProfitLossWidget = () => {
         </div>
         <div className={classes.sankeyContainer}>
           <RevenueCard />
-          <SankeyDiagram />
+          {/* <SankeyDiagram /> */}
         </div>
       </div>
     </>

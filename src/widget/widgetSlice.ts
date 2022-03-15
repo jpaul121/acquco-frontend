@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import data from '../../public/formattedPLData.json'
 
 export interface LineItemRecord {
   [ name: string ]: LineItem;
@@ -74,16 +75,36 @@ export const initialState: LineItemRecord = {
   },
 }
 
+export const loadDataAction = data => {
+  return {
+    type: 'LOAD_DATA',
+    payload: data,
+  }
+}
+
 const profitLossSlice = createSlice({
-  name: 'profitLoss',
-  initialState: initialState,
+  name: 'nodes',
+  initialState: data,
   reducers: {
-    recalculateBalance: (state: LineItemRecord) => {
-      const lineItemData = Object.assign({}, state)
-      return lineItemData
+    profitLoss: (state, action) => {
+      switch (action.type) {
+        case 'LOAD_DATA':
+          return action.payload
+        default:
+          return state
+      }
     },
   },
 })
 
+export const fetchProfitLossData = selector => {
+  return async (dispatch, getState) => {
+    const data = await (await fetch('/formattedPLData.json')).json()
+    console.log('the response data', data)
+    dispatch(loadDataAction(data))
+    return selector(getState())
+  }
+}
+
 export const profitLossReducer = profitLossSlice.reducer
-export const { recalculateBalance } = profitLossSlice.actions
+// export const { recalculateBalance } = profitLossSlice.actions

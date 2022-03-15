@@ -1,3 +1,6 @@
+import * as d3 from 'd3'
+
+import React, { useEffect, useState } from 'react'
 import { sankey, sankeyLinkHorizontal } from 'd3-sankey'
 
 const SankeyNode = ({ name, x0, x1, y0, y1, color }) => (
@@ -18,12 +21,15 @@ const SankeyLink = ({ link, color }) => (
   />
 )
 
-export const SankeyDiagram = ({ data, height, width }) => {
+export const SankeyDiagram = ({ height, width }) => {
+  
   const { nodes, links } = sankey()
     .nodeWidth(15)
     .nodePadding(10)
     .nodeId(d => d.name)
     .extent([[1, 1], [width - 1, height - 5]])(data)
+  
+  
   return (
     <g style={{ mixBlendMode: 'multiply' }}>
       {

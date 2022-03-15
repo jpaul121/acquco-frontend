@@ -1,0 +1,29 @@
+{
+  "nodes": [ 
+    { "name" : "Product charges", "kind": 1, "value": 126151.07, "granularity": 2 },
+    { "name" : "Shipping", "kind": 1, "value": 126151.07, "granularity": 2 }, 
+    { "name" : "Other revenues", "kind": 1, "value": 2251.87, "granularity": 2 }, 
+    { "name" : "Refunded expenses", "kind": 1, "value": 541.85, "granularity": 2 }, 
+    { "name" : "Refunded sales", "kind": 0, "value": 3890.82, "granularity": 2 }, 
+    { "name" : "Promotional rebates", "kind": 0, "value": 1808.24, "granularity": 2 }, 
+    { "name" : "FBA fees", "kind": 0, "value": 1315.51, "granularity": 2 }, 
+    { "name" : "Cost of advertising", "kind": 0, "value": 10095.06, "granularity": 2 }, 
+    { "name" : "Amazon fees", "kind": 0, "value": 57534.55, "granularity": 2 }, 
+    { "name" : "Other expenses", "kind": 0, "value": 10.43, "granularity": 2 }, 
+    { "name" : "Sales", "kind": 1 },
+    { "name" : "Refunds", "kind": 0 },
+    { "name" : "Expenses", "kind": 0 }
+  ], 
+  "links": [ 
+    { "source" : "Sales", "target" : "Product charges", "value" : 126151.07 }, 
+    { "source" : "Sales", "target" : "Shipping", "value" : 2251.87 }, 
+    { "source" : "Sales", "target" : "Other revenues", "value" : 700.11 }, 
+    { "source" : "Refunds", "target" : "Refunded expenses", "value" : 541.85 }, 
+    { "source" : "Refunds", "target" : "Refunded sales", "value" : 3890.82 }, 
+    { "source" : "Expenses", "target" : "Promotional rebates", "value" : 1808.24 }, 
+    { "source" : "Expenses", "target" : "FBA fees", "value" : 1315.51 }, 
+    { "source" : "Expenses", "target" : "Cost of advertising", "value" : 10095.06 }, 
+    { "source" : "Expenses", "target" : "Amazon fees", "value" : 57534.55 }, 
+    { "source" : "Expenses", "target" : "Other expenses", "value" : 10.43 }
+  ]
+}
