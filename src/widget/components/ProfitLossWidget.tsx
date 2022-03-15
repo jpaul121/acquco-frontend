@@ -3,6 +3,7 @@ import { ControlCamera as ControlCameraIcon, MoreHoriz } from '@mui/icons-materi
 import { IconButton } from '@mui/material'
 import React from 'react'
 import { RevenueCard } from '../'
+import { SankeyDiagram } from '../'
 import { Theme } from '@mui/material'
 import { makeStyles } from '../../utils'
 
@@ -61,6 +62,7 @@ export const ProfitLossWidget = () => {
         </div>
         <div className={classes.sankeyContainer}>
           <RevenueCard />
+          <SankeyDiagram />
         </div>
       </div>
     </>
