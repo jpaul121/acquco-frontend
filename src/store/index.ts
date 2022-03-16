@@ -98,6 +98,8 @@ export const getDiagramData = createSelector(stateIdentity, state => {
   return newState
 })
 
+const WEIGHT_NERF = .8
+
 export const getPlotlyData = createSelector(getDiagramData, state => {
   console.log('plotly', state)
   const labels = state.nodes
@@ -115,7 +117,7 @@ export const getPlotlyData = createSelector(getDiagramData, state => {
 
   const source = [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]
   const target = [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-  const values = [ 126151.07 ** .4, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06 ** .4, 57534.55 ** .4, 10.43 ]
+  const values = [ 126151.07 ** WEIGHT_NERF, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06 ** WEIGHT_NERF, 57534.55 ** WEIGHT_NERF, 10.43 ]
 
   return [{
     type: 'sankey',
@@ -140,7 +142,7 @@ export const getPlotlyData = createSelector(getDiagramData, state => {
     link: {
       source: [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],
       target: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
-      value: [ 126151.07, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06, 57534.55, 10.43 ],
+      value: [ 126151.07 ** WEIGHT_NERF, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06 ** WEIGHT_NERF, 57534.55 ** WEIGHT_NERF, 10.43 ],
       color: [
         'rgb(220, 234, 254)', 'rgb(251, 237, 238)', 'rgb(220, 234, 254)', 
         'rgb(220, 234, 254)', 'rgb(220, 234, 254)', 'rgb(220, 234, 254)', 

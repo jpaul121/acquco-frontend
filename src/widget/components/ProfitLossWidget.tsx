@@ -43,9 +43,36 @@ const useStyles = makeStyles()((theme: Theme) => ({
     color: 'rgb(33, 49, 87)',
     fontWeight: '700',
   },
+  lineItems: {
+    zIndex: 10,
+    width: '40%',
+    height: '70%',
+    marginLeft: '-25%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-around',
+  },
+  lineItem: {
+    backgroundColor: 'rgb(254, 249, 245)',
+    color: 'rgb(33, 49, 87)',
+    width: '20vw',
+    height: '3.5vh',
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '.5vw',
+    borderRadius: '5px',
+    width: '0',
+    minWidth: '100%',
+    '&:hover': {
+      backgroundColor: 'rgb(235, 127, 47)',
+      color: 'rgb(255, 255, 255)',
+      cursor: 'pointer',
+    }
+  },
 }))
 
-export const ProfitLossWidget = () => {
+export const ProfitLossWidget = ({ lineItemData }) => {
   const { classes } = useStyles()
   return (
     <>
@@ -64,6 +91,13 @@ export const ProfitLossWidget = () => {
         <div className={classes.sankeyContainer}>
           <RevenueCard />
           <SankeyDiagram />
+          <div className={classes.lineItems}>
+            {lineItemData && lineItemData.links.map(item => (
+              <div className={classes.lineItem}>
+                <h5 className={classes.lineItemTitle}>{item.target}</h5>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux'
 
 export const SankeyDiagram = () => {
   
-  const [ data, setData ] = useState()
   const [ pData, setPData ] = useState()
   const dispatch = useDispatch()
   
@@ -18,10 +17,9 @@ export const SankeyDiagram = () => {
           reactDispatch(responseData)
       })
     }
-    getData(getGoogleSankeyData, setData)
     getData(getPlotlyData, setPData)
-    console.log('pData', pData)
-  }, [ dispatch, data, pData ])
+    // console.log('pData', pData)
+  }, [ dispatch, pData ])
   
   
   return (
