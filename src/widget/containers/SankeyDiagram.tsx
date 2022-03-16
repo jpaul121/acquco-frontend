@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { getGoogleSankeyData, getPlotlyData } from '../../store'
 
 import { SankeyDiagram as SankeyDiagramComponent } from "../components/SankeyDiagram"
 import { fetchProfitLossData } from '../widgetSlice'
-import { getGoogleSankeyData } from '../../store'
 import { useDispatch } from 'react-redux'
 
 export const SankeyDiagram = () => {
   
   const [ data, setData ] = useState()
+  const [ pData, setPData ] = useState()
   const dispatch = useDispatch()
   
   useEffect(() => {
@@ -18,10 +19,12 @@ export const SankeyDiagram = () => {
       })
     }
     getData(getGoogleSankeyData, setData)
-  }, [ dispatch, data ])
+    getData(getPlotlyData, setPData)
+    console.log('pData', pData)
+  }, [ dispatch, data, pData ])
   
   
   return (
-    <SankeyDiagramComponent data={data} />
+    <SankeyDiagramComponent data={pData} />
   )
 }

@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 
+import { Google } from '@mui/icons-material'
 import { configureStore } from '@reduxjs/toolkit'
 import { createSelector } from '@reduxjs/toolkit'
 import { profitLossReducer } from '../widget/widgetSlice'
@@ -93,7 +94,55 @@ export const getDiagramData = createSelector(stateIdentity, state => {
     return { "name": item.name }
   })
   newState.nodes = diagramNodes
+  console.log('new state', newState)
   return newState
+})
+
+export const getPlotlyData = createSelector(getDiagramData, state => {
+  console.log('plotly', state)
+  const labels = state.nodes
+    .map(item => {
+      const topLevelLabels = [ 'Sales', 'Refunds', 'Expenses' ]
+      return !topLevelLabels.includes(item.name) ? item.name : null
+    })
+    .filter(item => item !== null)
+  // We need to hide the labels for 'Sales' and 'Expenses'
+  labels.unshift('', '')
+  // console.log('LABELS', labels)
+  
+  const xValues = [ 0.1, 0.1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7 ]
+  const yValues = [ 0.5, 0.4, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05 ]
+
+  const source = [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]
+  const target = [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+  const values = [ 126151.07, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06, 57534.55, 10.43 ]
+
+  return [{
+    type: 'sankey',
+    arrangement: 'snap', 
+    node: {
+      label: labels,
+      x: [ 0.1, 0.1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7 ],
+      y: [ 0.4, 0.5, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ],
+      color: [
+        'rgb(115, 171, 251)', 'rgb(233, 109, 117)', 'rgb(115, 171, 251)',
+        'rgb(115, 171, 251)', 'rgb(115, 171, 251)', 'rgb(115, 171, 251)', 
+        'rgb(233, 109, 117)', 'rgb(233, 109, 117)', 'rgb(233, 109, 117)', 
+        'rgb(233, 109, 117)', 'rgb(233, 109, 117)', 'rgb(233, 109, 117)'
+      ],
+    },
+    link: {
+      source: [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],
+      target: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+      value: [ 126151.07, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06, 57534.55, 10.43 ],
+      color: [
+        'rgb(220, 234, 254)', 'rgb(251, 237, 238)', 'rgb(220, 234, 254)', 
+        'rgb(220, 234, 254)', 'rgb(220, 234, 254)', 'rgb(220, 234, 254)', 
+        'rgb(251, 237, 238)', 'rgb(251, 237, 238)', 'rgb(251, 237, 238)', 
+        'rgb(251, 237, 238)', 'rgb(251, 237, 238)', 'rgb(251, 237, 238)'
+      ],
+    }
+  }]
 })
 
 export const getGoogleSankeyData = createSelector(getDiagramData, state => {
@@ -108,10 +157,15 @@ export const getGoogleSankeyData = createSelector(getDiagramData, state => {
     let source = item.source
     if (item.target === 'Refunded expenses') source = 'Sales'
     if (item.target === 'Refunded sales') source = 'Expenses'
+
+    // const color = (source === 'Sales') ? '#73ABFB' : '#E96D75'
+    const color = (source === 'Sales') ? 'rgb(115, 171, 251)' : 'rgb(233, 109, 117)'
+    const style = `color: ${color}; fill-color: ${color}`
+    // console.log(style)
     
-    return [ source, item.target, weight ]
+    return [ source, item.target, weight, style ]
   })
-  formattedData.unshift([ 'From', 'To', 'Weight' ])
+  formattedData.unshift([ 'From', 'To', 'Weight', { role: 'style', type: 'string' } ])
   console.log('FINALLY', formattedData)
   return formattedData
 })

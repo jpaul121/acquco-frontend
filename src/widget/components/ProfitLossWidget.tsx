@@ -23,6 +23,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     width: '80vw',
     paddingLeft: '4%',
     paddingRight: '4%',
+    zIndex: '1',
   },
   sankeyContainer: {
     display: 'flex',

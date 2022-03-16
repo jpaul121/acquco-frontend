@@ -1,13 +1,10 @@
-import Chart from 'react-google-charts'
+import Plot from 'react-plotly.js'
 import React from 'react'
 
 export const SankeyDiagram = ({ data }) => {  
   return (
-    <div>
-      <Chart
-        width={600}
-        height={'350px'}
-        chartType={'Sankey'}
+    <div style={{ zIndex: 5, overflow: 'visible' }}>
+      <Plot
         data={data}
       />
     </div>
