@@ -100,7 +100,7 @@ const profitLossSlice = createSlice({
 export const fetchProfitLossData = selector => {
   return async (dispatch, getState) => {
     const data = await (await fetch('/formattedPLData.json')).json()
-    console.log('the response data', data)
+    // console.log('the response data', data)
     dispatch(loadDataAction(data))
     return selector(getState())
   }

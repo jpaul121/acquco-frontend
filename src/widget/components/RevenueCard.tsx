@@ -6,6 +6,7 @@ import React from 'react'
 import { Theme } from '@mui/material'
 import { makeStyles } from '../../utils'
 import { rawNumbertoDollar } from '../../utils'
+import { v4 as uuidv4 } from 'uuid'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   revenueCard: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     '&:nth-of-type(1)': {
       borderColor: 'rgb(229, 238, 252)',
     },
-    '&:nth-last-child(1)': {
+    '&:nth-last-of-type(1)': {
       marginBottom: 'auto',
     },
   },
@@ -111,7 +112,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
 export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProceeds }) => {
   const { classes } = useStyles()
   return (
-    <div className={classes.revenueCard}>
+    <div className={classes.revenueCard} key={uuidv4()}>
       {
         [ ['Sales', salesTotal], ['Refunds', refundTotal], ['Expenses', expenseTotal] ].map(heading => {
           return (
