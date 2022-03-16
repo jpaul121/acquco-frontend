@@ -20,6 +20,8 @@ const useStyles = makeStyles()((theme: Theme) => ({
     alignItems: 'center',
     height: '55%',
     width: '23%',
+    zIndex: 10,
+    marginRight: '-16%',
   },
   budgetItem: {
     backgroundColor: 'rgb(253, 253, 253)',

@@ -115,13 +115,14 @@ export const getPlotlyData = createSelector(getDiagramData, state => {
 
   const source = [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]
   const target = [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-  const values = [ 126151.07, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06, 57534.55, 10.43 ]
+  const values = [ 126151.07 ** .4, 2251.87, 700.11, 541.85, 3890.82, 1808.24, 1315.51, 10095.06 ** .4, 57534.55 ** .4, 10.43 ]
 
   return [{
     type: 'sankey',
     arrangement: 'snap', 
     node: {
-      label: labels,
+      // label: labels,
+      label: '',
       x: [ 0.1, 0.1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7 ],
       y: [ 0.4, 0.5, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ],
       color: [
@@ -130,6 +131,11 @@ export const getPlotlyData = createSelector(getDiagramData, state => {
         'rgb(233, 109, 117)', 'rgb(233, 109, 117)', 'rgb(233, 109, 117)', 
         'rgb(233, 109, 117)', 'rgb(233, 109, 117)', 'rgb(233, 109, 117)'
       ],
+      line: {
+        width: 0,
+      },
+      thickness: 6,
+      hoverinfo: 'skip',
     },
     link: {
       source: [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],
@@ -141,6 +147,16 @@ export const getPlotlyData = createSelector(getDiagramData, state => {
         'rgb(251, 237, 238)', 'rgb(251, 237, 238)', 'rgb(251, 237, 238)', 
         'rgb(251, 237, 238)', 'rgb(251, 237, 238)', 'rgb(251, 237, 238)'
       ],
+      hoverlabel: {
+        bgcolor: 'rgb(255, 255, 255)',
+        bordercolor: 'rgb(237, 239, 245)',
+        hovertemplate: 'This is a tooltip example.',
+        hoverinfo: 'none',
+        font: {
+          color: 'rgb(182, 191, 212)',
+        },
+      },
+      hoverinfo: 'skip',
     }
   }]
 })
@@ -166,6 +182,6 @@ export const getGoogleSankeyData = createSelector(getDiagramData, state => {
     return [ source, item.target, weight, style ]
   })
   formattedData.unshift([ 'From', 'To', 'Weight', { role: 'style', type: 'string' } ])
-  console.log('FINALLY', formattedData)
+  // console.log('FINALLY', formattedData)
   return formattedData
 })
