@@ -1,11 +1,11 @@
 import { ControlCamera as ControlCameraIcon, MoreHoriz } from '@mui/icons-material'
+import { makeStyles, rawNumbertoDollar } from '../../utils'
 
 import { IconButton } from '@mui/material'
 import React from 'react'
 import { RevenueCard } from '../'
 import { SankeyDiagram } from '../'
 import { Theme } from '@mui/material'
-import { makeStyles } from '../../utils'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   profitLossWidget: {
@@ -46,7 +46,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
   lineItems: {
     zIndex: 10,
     width: '40%',
-    height: '70%',
     // marginLeft: '-25%',
     display: 'flex',
     flexDirection: 'column',
@@ -54,6 +53,23 @@ const useStyles = makeStyles()((theme: Theme) => ({
     justifyContent: 'space-around',
     justifySelf: 'flex-end',
     marginLeft: 'auto',
+    height: '100%',
+  },
+  revenueData: {
+    width: '100%',
+    justifySelf: 'start-end',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    height: '100%',
+  },
+  expenseData: {
+    width: '100%',
+    justifySelf: 'start-end',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    height: '100%',
   },
   lineItem: {
     backgroundColor: 'rgb(254, 249, 245)',
@@ -72,9 +88,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
       cursor: 'pointer',
     }
   },
+  lineItemValue: {
+    justifySelf: 'flex-end',
+    marginLeft: 'auto',
+  },
 }))
 
-export const ProfitLossWidget = ({ lineItemData }) => {
+export const ProfitLossWidget = ({ expenseData, revenueData }) => {
   const { classes } = useStyles()
   return (
     <>
@@ -94,11 +114,24 @@ export const ProfitLossWidget = ({ lineItemData }) => {
           <RevenueCard />
           <SankeyDiagram />
           <div className={classes.lineItems}>
-            {lineItemData && lineItemData.links.map(item => (
-              <div className={classes.lineItem}>
-                <h5 className={classes.lineItemTitle}>{item.target}</h5>
-              </div>
-            ))}
+            <div className={classes.revenueData}>
+              {revenueData && revenueData.map((item, i) => {
+              const offsets = [ '20%', '19%', '6%', '1%' ]
+              return (
+                <div className={classes.lineItem} style={{ marginTop: `${offsets[i]}` }}>
+                  <h5 className={classes.lineItemTitle}>{item.target}</h5>
+                  <h5 className={classes.lineItemValue} style={{ color: 'rgb(80, 150, 250)' }}>{rawNumbertoDollar.format(item.value)}</h5>
+                </div>
+              )})}
+            </div>
+            <div className={classes.expenseData}>
+              {expenseData && expenseData.map(item => (
+                <div className={classes.lineItem}>
+                  <h5 className={classes.lineItemTitle}>{item.target}</h5>
+                  <h5 className={classes.lineItemValue} style={{ color: 'rgb(231, 71, 82)' }}>{rawNumbertoDollar.format(item.value)}</h5>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Google } from '@mui/icons-material'
 import { configureStore } from '@reduxjs/toolkit'
 import { createSelector } from '@reduxjs/toolkit'
 import { profitLossReducer } from '../widget/widgetSlice'
@@ -97,6 +96,14 @@ export const getDiagramData = createSelector(stateIdentity, state => {
   console.log('new state', newState)
   return newState
 })
+
+export const getRevenue = createSelector(getDiagramData, state => (
+  state.links.filter(item => item.source === 'Sales' || item.target === 'Refunded expenses')
+))
+
+export const getExpenses = createSelector(getDiagramData, state => (
+  state.links.filter(item => item.source === 'Expenses' || item.target === 'Refunded sales')
+))
 
 const WEIGHT_NERF = .8
 

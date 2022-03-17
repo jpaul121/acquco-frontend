@@ -1,15 +1,16 @@
 // @ts-nocheck
 
 import React, { useEffect, useState } from 'react'
+import { getExpenses, getRevenue } from '../../store'
 
 import { ProfitLossWidget as PLWidgetComponent } from '../components/ProfitLossWidget'
 import { fetchProfitLossData } from '../widgetSlice'
-import { getDiagramData } from '../../store'
 import { useDispatch } from 'react-redux'
 
 export const ProfitLossWidget = () => {
   
-  const [ lineItemData, setLineItemData ] = useState()
+  const [ revenueData, setRevenueData ] = useState()
+  const [ expenseData, setExpenseData ] = useState()
 
   const dispatch = useDispatch()
 
@@ -20,10 +21,10 @@ export const ProfitLossWidget = () => {
           reactDispatch(responseData)
       })
     }
-    getData(getDiagramData, setLineItemData)
-    console.log(lineItemData)
-  }, [ dispatch, lineItemData ])
+    getData(getExpenses, setExpenseData)
+    getData(getRevenue, setRevenueData)
+  }, [ dispatch, expenseData, revenueData ])
   
   
-  return <PLWidgetComponent lineItemData={lineItemData} />
+  return <PLWidgetComponent expenseData={expenseData} revenueData={revenueData} />
 }
