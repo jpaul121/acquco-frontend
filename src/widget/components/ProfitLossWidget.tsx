@@ -146,11 +146,57 @@ const useStyles = makeStyles()((theme: Theme) => ({
     marginTop: '0',
     marginBottom: '0',
   },
+  detailsView: {
+    width: '24%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  smallerSankey: {
+    width: '33%',
+    height: '23%',
+  },
+  detailedItemView: {
+    width: '70%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginLeft: '1%',
+  },
+  detailedItem: {
+    backgroundColor: 'rgb(254, 249, 245)',
+    color: 'rgb(33, 49, 87)',
+    width: '100%',
+    height: '3.5vh',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 .5vw',
+    borderRadius: '5px',
+    width: '0',
+    minWidth: '100%',
+    '&:nth-of-type(2)': {
+      '&:hover': {
+        color: 'rgb(255, 255, 255)',
+      },
+    },
+    '&:hover': {
+      backgroundColor: 'rgb(235, 127, 47)',
+      color: 'rgb(255, 255, 255) !important' as any,
+      cursor: 'pointer',
+      '&:nth-of-type(2)': {
+        color: 'rgb(255, 255, 255)',
+      },
+    }
+  },
 }))
 
 export const ProfitLossWidget = ({ expenseData, revenueData }) => {
   
   const [ menuOpen, toggleMenu ] = useState(false)
+  const [ detailsViewOpen, toggleDetailsView ] = useState(false)
   
   const { classes } = useStyles()
   
@@ -163,8 +209,11 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
             <IconButton sx={{ color: 'gray' }} >
               <ControlCameraIcon  />
             </IconButton>
-            <IconButton sx={{ color: 'gray', position: 'relative' }} >
-              <MoreHoriz onClick={() => toggleMenu(!menuOpen)} />
+            <IconButton 
+              onClick={() => toggleMenu(!menuOpen)}
+              sx={{ color: 'gray', position: 'relative' }}
+            >
+              <MoreHoriz />
               {
                 menuOpen &&
                 <div className={classes.sandwichMenu}>
@@ -183,9 +232,12 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
           <div className={classes.lineItems}>
             <div className={classes.revenueData}>
               {revenueData && revenueData.map((item, i) => {
-              const offsets = [ '20%', '19%', '6%', '1%' ]
+              const offsets = (detailsViewOpen === true) ? [ '39%', '17%', '4%', '0', '0' ] : [ '20%', '19%', '6%', '1%' ]
               return (
-                <div className={classes.lineItem} style={{ marginTop: `${offsets[i]}` }}>
+                <div className={classes.lineItem} 
+                  style={{ marginTop: `${offsets[i]}` }}
+                  onClick={(i === 2) ? () => toggleDetailsView(!detailsViewOpen) : undefined}
+                >
                   <h5 className={classes.lineItemTitle}>{item.target}</h5>
                   <h5 className={cx(classes.lineItemValue, classes.revenue)}>{rawNumbertoDollar.format(item.value)}</h5>
                 </div>
@@ -193,15 +245,42 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
             </div>
             <div className={classes.expenseData}>
             {expenseData && expenseData.map((item, i) => {
-              const offsets = [ '14%', '1%', '1%', '0%', '1%', '2%' ]
+              const offsets = (detailsViewOpen === true) ? [ '13%', '0', '0', '0', '0', '0', '0' ] : [ '14%', '1%', '1%', '0%', '1%', '2%' ]
               return (
-                <div className={classes.lineItem} style={{ marginTop: `${offsets[i]}` }}>
+                <div className={classes.lineItem} 
+                  style={{ marginTop: `${offsets[i]}` }} 
+                >
                   <h5 className={classes.lineItemTitle}>{item.target}</h5>
                   <h5 className={cx(classes.lineItemValue, classes.expense)}>{rawNumbertoDollar.format(item.value)}</h5>
                 </div>
               )})}
             </div>
           </div>
+          {
+            detailsViewOpen && 
+            <div className={classes.detailsView}>
+              <svg viewBox='0 0 210 420' style={{ width: '33%', height: '23%', marginTop: '98%' }}>
+                <path d='M 204 7 V 83 C 91 85 40 173 0 210 V 200 C 74 147 83 10 204 7' fill='rgb(220, 235, 254)' />
+                <path d='M 203 7 L 203 83 Z C 204 6 207 6 208 7 V 83 C 207 84 204 84 203 83' fill='rgb(115, 171, 251)' />
+                <path d='M 205 324 V 345 C 87 343 36 275 0 225 V 218 C 35 257 87 319 205 324' fill='rgb(220, 235, 254)' />
+                <path d='M 203 323 L 203 346 Z C 204 322 207 322 208 323 V 346 C 207 347 204 347 203 346' fill='rgb(115, 171, 251)' />
+              </svg>
+              <div className={classes.detailedItemView}>
+                <div className={classes.detailedItem} 
+                  style={{ marginTop: '159%' }}
+                >
+                  <h5 className={classes.lineItemTitle}>Other</h5>
+                  <h5 className={cx(classes.lineItemValue, classes.revenue)}>{rawNumbertoDollar.format(500)}</h5>
+                </div>
+                <div className={classes.detailedItem} 
+                  style={{ marginTop: '41%' }}
+                >
+                  <h5 className={classes.lineItemTitle}>Other</h5>
+                  <h5 className={cx(classes.lineItemValue, classes.revenue)}>{rawNumbertoDollar.format(200.11)}</h5>
+                </div>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </>
