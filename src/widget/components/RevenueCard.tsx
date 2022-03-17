@@ -21,7 +21,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     height: '55%',
     width: '23%',
     zIndex: 10,
-    marginRight: '-16%',
+    // marginRight: '-16%',
   },
   budgetItem: {
     backgroundColor: 'rgb(253, 253, 253)',
