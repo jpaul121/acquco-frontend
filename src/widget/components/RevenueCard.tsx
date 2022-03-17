@@ -4,6 +4,7 @@ import { HelpOutline } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 import React from 'react'
 import { Theme } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip'
 import { makeStyles } from '../../utils'
 import { rawNumbertoDollar } from '../../utils'
 import { v4 as uuidv4 } from 'uuid'
@@ -108,7 +109,11 @@ const useStyles = makeStyles()((theme: Theme) => ({
     alignSelf: 'center', 
     justifySelf: 'center',
     marginTop: 'auto',
-  }
+  },
+  // helpTooltip: {
+  //   backgroundColor: 'rgb(255, 255, 255)',
+  //   // color: 'rgb(166, 177, 203)',
+  // },
 }))
 
 export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProceeds }) => {
@@ -121,9 +126,43 @@ export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProcee
             <div className={classes.budgetItem}>
               <div className={classes.budgetItemTopRow}>
                 <h4 className={classes.itemName}>{heading[0]}</h4>
-                <IconButton sx={{ color: 'rgb(236, 143, 73)', fontSize: '1em' }}>
-                  <HelpOutline sx={{ fontSize: '1em' }} />
-                </IconButton>
+                <Tooltip 
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        backgroundColor: 'rgb(255, 255, 255)',
+                        color: 'rgb(171, 182, 206)',
+                        fontSize: '.8em',
+                        fontWeight: '700',
+                        borderWidth: '2px',
+                        borderColor: 'rgb(246, 247, 250)',
+                        borderStyle: 'solid',
+                        height: '6vh',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        '& .MuiTooltip-arrow': {
+                          backgroundColor: 'rgb(255, 255, 255)',
+                        },
+                      }
+                    },
+                    // arrow: {
+                    //   color: 'rgb(171, 182, 206)',
+                    //   // '&::before': {
+                    //   //   borderWidth: '2px',
+                    //   //   borderColor: 'rgb(246, 247, 250)',
+                    //   //   borderStyle: 'solid',
+                    //   // }
+                    // },
+                  }}
+                  title='This is a tooltip example.' 
+                  placement='right' 
+                  arrow
+                >
+                  <IconButton sx={{ color: 'rgb(236, 143, 73)', fontSize: '1em' }}>
+                    <HelpOutline sx={{ fontSize: '1em' }} />
+                  </IconButton>
+                </Tooltip>
               </div>
               <h4 className={classes.itemAmount} style={{ color: heading[1] > 0 ? 'rgb(80, 150, 250)' : 'rgb(231, 71, 82)' }}>{rawNumbertoDollar.format(heading[1])}</h4>
             </div>
