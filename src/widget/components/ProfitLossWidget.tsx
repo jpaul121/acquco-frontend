@@ -1,11 +1,12 @@
 import { ControlCamera as ControlCameraIcon, MoreHoriz } from '@mui/icons-material'
+import React, { useState } from 'react'
 import { makeStyles, rawNumbertoDollar } from '../../utils'
 
 import { IconButton } from '@mui/material'
-import React from 'react'
 import { RevenueCard } from '../'
 import { SankeyDiagram } from '../'
 import { Theme } from '@mui/material'
+import { cx } from '@emotion/css'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   profitLossWidget: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     flexGrow: '1',
   },
   toolbarButtons: {
-    justifySelf: 'flex-end',
+    justifySelf: 'flex-start',
     marginLeft: 'auto',
   },
   widgetToolbar: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    justifySelf: 'flex-end',
+    justifySelf: 'flex-start',
     marginLeft: 'auto',
     height: '100%',
   },
@@ -68,7 +69,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     justifySelf: 'start-end',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     height: '100%',
   },
   lineItem: {
@@ -78,24 +79,81 @@ const useStyles = makeStyles()((theme: Theme) => ({
     height: '3.5vh',
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: '.5vw',
+    padding: '0 .5vw',
     borderRadius: '5px',
     width: '0',
     minWidth: '100%',
+    '&:nth-of-type(2)': {
+      '&:hover': {
+        color: 'rgb(255, 255, 255)',
+      },
+    },
     '&:hover': {
       backgroundColor: 'rgb(235, 127, 47)',
-      color: 'rgb(255, 255, 255)',
+      color: 'rgb(255, 255, 255) !important' as any,
       cursor: 'pointer',
+      '&:nth-of-type(2)': {
+        color: 'rgb(255, 255, 255)',
+      },
     }
   },
   lineItemValue: {
     justifySelf: 'flex-end',
     marginLeft: 'auto',
+    '&:hover': {
+      color: 'rgb(255, 255, 255) !important',
+    },
+  },
+  // 'lineItemValue:hover h4': {
+  //   color: 'rgb(255, 255, 255) !important',
+  // },
+  revenue: {
+    color: 'rgb(80, 150, 250)',
+    // '&:hover': {
+    //   color: 'rgb(255, 255, 255) !important',
+    // },
+  },
+  expense: {
+    color: 'rgb(231, 71, 82)',
+    // '&:hover': {
+    //   color: 'rgb(255, 255, 255) !important',
+    // },
+  },
+  '$lineItemValue *': {
+    '&:hover': {
+      color: 'white',
+    },
+  },
+  sandwichMenu: {
+    position: 'absolute',
+    right: '0',
+    top: '100%',
+    height: '16vh',
+    width: '10vw',
+    backgroundColor: 'rgb(255, 255, 255)',
+    borderColor: 'rgb(246, 247, 250)',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderRadius: '10px',
+    zIndex: '20',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  menuItem: {
+    color: 'rgb(47, 62, 97)',
+    marginTop: '0',
+    marginBottom: '0',
   },
 }))
 
 export const ProfitLossWidget = ({ expenseData, revenueData }) => {
+  
+  const [ menuOpen, toggleMenu ] = useState(false)
+  
   const { classes } = useStyles()
+  
   return (
     <>
       <div className={classes.profitLossWidget}>
@@ -105,8 +163,17 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
             <IconButton sx={{ color: 'gray' }} >
               <ControlCameraIcon  />
             </IconButton>
-            <IconButton sx={{ color: 'gray' }} >
-              <MoreHoriz />
+            <IconButton sx={{ color: 'gray', position: 'relative' }} >
+              <MoreHoriz onClick={() => toggleMenu(!menuOpen)} />
+              {
+                menuOpen &&
+                <div className={classes.sandwichMenu}>
+                  <h6 className={classes.menuItem}>Edit</h6>
+                  <h6 className={classes.menuItem}>Delete</h6>
+                  <h6 className={classes.menuItem}>Export CSV</h6>
+                </div>
+              }
+
             </IconButton>
           </div>
         </div>
@@ -120,17 +187,19 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
               return (
                 <div className={classes.lineItem} style={{ marginTop: `${offsets[i]}` }}>
                   <h5 className={classes.lineItemTitle}>{item.target}</h5>
-                  <h5 className={classes.lineItemValue} style={{ color: 'rgb(80, 150, 250)' }}>{rawNumbertoDollar.format(item.value)}</h5>
+                  <h5 className={cx(classes.lineItemValue, classes.revenue)}>{rawNumbertoDollar.format(item.value)}</h5>
                 </div>
               )})}
             </div>
             <div className={classes.expenseData}>
-              {expenseData && expenseData.map(item => (
-                <div className={classes.lineItem}>
+            {expenseData && expenseData.map((item, i) => {
+              const offsets = [ '14%', '1%', '1%', '0%', '1%', '2%' ]
+              return (
+                <div className={classes.lineItem} style={{ marginTop: `${offsets[i]}` }}>
                   <h5 className={classes.lineItemTitle}>{item.target}</h5>
-                  <h5 className={classes.lineItemValue} style={{ color: 'rgb(231, 71, 82)' }}>{rawNumbertoDollar.format(item.value)}</h5>
+                  <h5 className={cx(classes.lineItemValue, classes.expense)}>{rawNumbertoDollar.format(item.value)}</h5>
                 </div>
-              ))}
+              )})}
             </div>
           </div>
         </div>
