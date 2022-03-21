@@ -1,4 +1,3 @@
-import { BudgetItem } from '../'
 import { Divider } from '@mui/material'
 import { HelpOutline } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
@@ -22,7 +21,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
     height: '55%',
     width: '23%',
     zIndex: 10,
-    // marginRight: '-16%',
   },
   budgetItem: {
     backgroundColor: 'rgb(253, 253, 253)',
@@ -110,20 +108,16 @@ const useStyles = makeStyles()((theme: Theme) => ({
     justifySelf: 'center',
     marginTop: 'auto',
   },
-  // helpTooltip: {
-  //   backgroundColor: 'rgb(255, 255, 255)',
-  //   // color: 'rgb(166, 177, 203)',
-  // },
 }))
 
 export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProceeds }) => {
   const { classes } = useStyles()
   return (
-    <div className={classes.revenueCard} key={uuidv4()}>
+    <div className={classes.revenueCard}>
       {
         [ ['Sales', salesTotal], ['Refunds', refundTotal], ['Expenses', expenseTotal] ].map(heading => {
           return (
-            <div className={classes.budgetItem}>
+            <div className={classes.budgetItem} key={uuidv4()}>
               <div className={classes.budgetItemTopRow}>
                 <h4 className={classes.itemName}>{heading[0]}</h4>
                 <Tooltip 
@@ -146,14 +140,6 @@ export const RevenueCard = ({ salesTotal, refundTotal, expenseTotal, totalProcee
                         },
                       }
                     },
-                    // arrow: {
-                    //   color: 'rgb(171, 182, 206)',
-                    //   // '&::before': {
-                    //   //   borderWidth: '2px',
-                    //   //   borderColor: 'rgb(246, 247, 250)',
-                    //   //   borderStyle: 'solid',
-                    //   // }
-                    // },
                   }}
                   title='This is a tooltip example.' 
                   placement='right' 

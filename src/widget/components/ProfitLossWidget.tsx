@@ -7,6 +7,8 @@ import { RevenueCard } from '../'
 import { SankeyDiagram } from '../'
 import { Theme } from '@mui/material'
 import { cx } from '@emotion/css'
+import { v4 as uuidv4 } from 'uuid'
+
 
 const useStyles = makeStyles()((theme: Theme) => ({
   profitLossWidget: {
@@ -47,7 +49,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
   lineItems: {
     zIndex: 10,
     width: '40%',
-    // marginLeft: '-25%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -104,20 +105,11 @@ const useStyles = makeStyles()((theme: Theme) => ({
       color: 'rgb(255, 255, 255) !important',
     },
   },
-  // 'lineItemValue:hover h4': {
-  //   color: 'rgb(255, 255, 255) !important',
-  // },
   revenue: {
     color: 'rgb(80, 150, 250)',
-    // '&:hover': {
-    //   color: 'rgb(255, 255, 255) !important',
-    // },
   },
   expense: {
     color: 'rgb(231, 71, 82)',
-    // '&:hover': {
-    //   color: 'rgb(255, 255, 255) !important',
-    // },
   },
   '$lineItemValue *': {
     '&:hover': {
@@ -235,6 +227,7 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
               const offsets = (detailsViewOpen === true) ? [ '39%', '17%', '4%', '0', '0' ] : [ '20%', '19%', '6%', '1%' ]
               return (
                 <div className={classes.lineItem} 
+                  key={uuidv4()}
                   style={{ marginTop: `${offsets[i]}` }}
                   onClick={(i === 2) ? () => toggleDetailsView(!detailsViewOpen) : undefined}
                 >
@@ -247,7 +240,9 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
             {expenseData && expenseData.map((item, i) => {
               const offsets = (detailsViewOpen === true) ? [ '13%', '0', '0', '0', '0', '0', '0' ] : [ '14%', '1%', '1%', '0%', '1%', '2%' ]
               return (
-                <div className={classes.lineItem} 
+                <div 
+                  className={classes.lineItem} 
+                  key={uuidv4()}
                   style={{ marginTop: `${offsets[i]}` }} 
                 >
                   <h5 className={classes.lineItemTitle}>{item.target}</h5>
@@ -272,7 +267,8 @@ export const ProfitLossWidget = ({ expenseData, revenueData }) => {
                   <h5 className={classes.lineItemTitle}>Other</h5>
                   <h5 className={cx(classes.lineItemValue, classes.revenue)}>{rawNumbertoDollar.format(500)}</h5>
                 </div>
-                <div className={classes.detailedItem} 
+                <div 
+                  className={classes.detailedItem} 
                   style={{ marginTop: '41%' }}
                 >
                   <h5 className={classes.lineItemTitle}>Other</h5>

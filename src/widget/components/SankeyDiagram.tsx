@@ -1,4 +1,4 @@
-import Plot from 'react-plotly.js'
+
 import React from 'react'
 import { makeStyles } from '../../utils'
 
@@ -13,13 +13,16 @@ const classes = makeStyles()((theme) => ({
     height: '100%',
     width: '30%',
     minWidth: '0',
-    // marginLeft: '-16% !important',
   },
 }))
 
 export const SankeyDiagram = () => {  
   return (
     <div className={classes.sankeyFlexbox}>
+      {/* SVG paths created using: https://yqnn.github.io/svg-path-editor/. 
+        Could probably use CSS-in-JS to create paths whose dimensions vary depending
+        on the magnitude of each menu item. 
+      */}
       <svg viewBox='0 0 210 420' style={{ width: '100%', height: '100%' }}>
         {/* Revenue */}
         <path d='M 204 7 V 83 C 91 85 40 173 0 210 V 200 C 74 147 83 10 204 7' fill='rgb(220, 235, 254)' />

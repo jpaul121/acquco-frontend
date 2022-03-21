@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { getExpenses, getRevenue } from '../../store'
 
 import { ProfitLossWidget as PLWidgetComponent } from '../components/ProfitLossWidget'
@@ -14,16 +12,20 @@ export const ProfitLossWidget = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const getData = async (selector, reactDispatch) => {
+  const getData = useCallback(
+    async (selector, reactDispatch) => {
       await dispatch(fetchProfitLossData(selector))
         .then(responseData => {
           reactDispatch(responseData)
       })
-    }
+    }, 
+    [ dispatch ]
+  )
+
+  useEffect(() => {
     getData(getExpenses, setExpenseData)
     getData(getRevenue, setRevenueData)
-  }, [ dispatch, expenseData, revenueData ])
+  }, [ getData ])
   
   
   return <PLWidgetComponent expenseData={expenseData} revenueData={revenueData} />
